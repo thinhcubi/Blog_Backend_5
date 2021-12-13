@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('users')->group(function () {
+    Route::get('/', [AdminController::class, 'index']);
+    Route::post('/add', [AdminController::class, 'store']);
+    Route::put('/edit/{id}',[AdminController::class,'edit']);
+    Route::delete('/{id}', [AdminController::class, 'delete']);
+    Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
 });
