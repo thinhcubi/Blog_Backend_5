@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::prefix('users')->group(function () {
     Route::get('/', [AdminController::class, 'index']);
     Route::post('/add', [AdminController::class, 'store']);
@@ -29,6 +31,8 @@ Route::post('/register', 'App\Http\Controllers\UserController@register');
 
 Route::post('login', 'App\Http\Controllers\UserController@authenticate');
 
-Route::group(['/middleware' => ['jwt.verify']], function () {
-    Route::post('user', 'App\Http\Controllers\UserController@getAuthenticatedUser');
+Route::group(['/middleware' => ['jwt.verify']], function() {
+
+    Route::post('user','App\Http\Controllers\UserController@getAuthenticatedUser');
+
 });
