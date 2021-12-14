@@ -27,12 +27,13 @@ Route::prefix('users')->group(function () {
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::post('/register', 'App\Http\Controllers\UserController@register');
+Route::post('/register', 'App\Http\Controllers\LoginController@register');
 
-Route::post('login', 'App\Http\Controllers\UserController@authenticate');
+Route::post('login', 'App\Http\Controllers\LoginController@authenticate');
 
 Route::group(['/middleware' => ['jwt.verify']], function() {
 
-    Route::post('user','App\Http\Controllers\UserController@getAuthenticatedUser');
+    Route::post('user','App\Http\Controllers\LoginController@getAuthenticatedUser');
 
 });
+Route::get('user/posts',[\App\Http\Controllers\UserController::class,'getListPostsByUser']);
