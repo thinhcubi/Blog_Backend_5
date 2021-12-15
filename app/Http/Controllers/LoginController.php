@@ -18,7 +18,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class UserController extends Controller
+class LoginController extends Controller
 
 {
 

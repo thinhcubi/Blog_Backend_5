@@ -14,21 +14,19 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::prefix('users')->group(function () {
-    Route::get('/', [AdminController::class, 'index']);
-    Route::post('/add', [AdminController::class, 'store']);
-    Route::put('/edit/{id}', [AdminController::class, 'edit']);
-    Route::delete('/{id}', [AdminController::class, 'delete']);
-    Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
+Route::prefix('admin')->group(function () {
+        Route::get('/', [AdminController::class, 'index']);
+        Route::post('/add', [AdminController::class, 'store']);
+        Route::put('/edit/{id}', [AdminController::class, 'edit']);
+        Route::delete('/{id}', [AdminController::class, 'delete']);
+        Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
+        Route::get('/search', [AdminController::class, 'search']);
 });
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-Route::post('/register', 'App\Http\Controllers\UserController@register');
+Route::post('/register', 'App\Http\Controllers\LoginController@register');
 
-Route::post('login', 'App\Http\Controllers\UserController@authenticate');
+Route::post('login', 'App\Http\Controllers\LoginController@authenticate');
 
 Route::group(['/middleware' => ['jwt.verify']], function () {
-    Route::post('user', 'App\Http\Controllers\UserController@getAuthenticatedUser');
+    Route::post('user', 'App\Http\Controllers\LoginController@getAuthenticatedUser');
 });
