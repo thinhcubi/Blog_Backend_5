@@ -11,7 +11,7 @@ class UserController extends Controller
     public function getListPostsByUser()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $posts = Post::where('user_id',$user->id);
+        $posts = Post::where('user_id',$user->id)->get();
         return response()->json($posts);
     }
 }
