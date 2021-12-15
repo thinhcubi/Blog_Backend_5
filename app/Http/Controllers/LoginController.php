@@ -100,6 +100,8 @@ class LoginController extends Controller
 
             'password' => Hash::make($request->get('password')),
 
+            'role' => 1,
+
         ]);
 
 
