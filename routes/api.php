@@ -1,7 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +18,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-Route::post('/register', 'App\Http\Controllers\UserController@register');
 
-Route::post('login', 'App\Http\Controllers\UserController@authenticate');
+Route::middleware('jwt.verify')->group(function (){
+    Route::post('me',[LoginController::class, 'getAuthenticatedUser']);
+    Route::post('logout', [LoginController::class, 'logout']);
 
-Route::group(['/middleware' => ['jwt.verify']], function() {
+    Route::prefix('users')->group(function () {
+        Route::get('/', [AdminController::class, 'index']);
+        Route::post('/add', [AdminController::class, 'store']);
+        Route::put('/edit/{id}', [AdminController::class, 'edit']);
+        Route::delete('/{id}', [AdminController::class, 'delete']);
+        Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
+        Route::get('/posts',[UserController::class,'getListPostsByUser']);
+    });
 
-    Route::post('user','App\Http\Controllers\UserController@getAuthenticatedUser');
+    Route::prefix('posts')->group(function () {
+        Route::post('create',[PostController::class,'store']);
+        Route::get('/',[PostController::class,'index']);
 
+    });
 });
-Route::post('create',[\App\Http\Controllers\PostController::class,'store']);
-Route::get('list',[\App\Http\Controllers\PostController::class,'index']);
+
+
+Route::post('/register', [LoginController::class, 'register']);
+Route::post('login', [LoginController::class, 'authenticate']);
+
