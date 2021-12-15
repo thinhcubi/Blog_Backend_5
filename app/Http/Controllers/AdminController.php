@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,7 @@ class AdminController extends Controller
 
     function delete($id)
     {
+        Post::where('user_id', $id)->update(['user_id' => 1]);
         User::destroy($id);
         return response()->json();
     }
@@ -46,5 +48,16 @@ class AdminController extends Controller
     function showDetail($id) {
         $user = User::find($id);
         return response()->json($user);
+    }
+
+    function search(Request $request) {
+        $keyword = $request->input('keyword');
+
+        if (!$keyword) {
+            return response()->json('khong tin thay');
+        }
+        $users = User::where('id', '=', '%'.$keyword.'%')->first();
+
+        return response()->json($users);
     }
 }
