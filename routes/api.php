@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+
 
 
 /*
@@ -27,12 +29,13 @@ Route::prefix('users')->group(function () {
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::post('/register', 'App\Http\Controllers\UserController@register');
+Route::post('/register', [LoginController::class, 'register']);
 
-Route::post('login', 'App\Http\Controllers\UserController@authenticate');
+Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::group(['/middleware' => ['jwt.verify']], function() {
+    Route::get('/logout', [LoginController::class, 'logout']);
 
-    Route::post('user','App\Http\Controllers\UserController@getAuthenticatedUser');
+    Route::post('/user',[LoginController::class, 'getAuthenticatedUser']);
 
 });
