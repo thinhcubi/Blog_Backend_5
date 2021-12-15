@@ -14,19 +14,29 @@ use JWTAuth;
 class LoginController extends Controller
 
 {
-
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
+        $token = JWTAuth::attempt($credentials);
         try {
-            if (!$token = JWTAuth::attempt($credentials)) {
-
-                return response()->json(['error' => 'invalid_credentials'], 400);
+            if ($token) {
+                $data = [
+                    'token' => $token,
+                    'status' => 'success',
+                    'user' => Auth::user(),
+                    'message' => 'đăng nhập thành công'
+                ];
+                return response()->json($data);
+            } else {
+                $data = [
+                    'status' => 'error',
+                    'message' => 'không tài khoản không hợp lệ'
+                ];
+                return response()->json($data);
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json($e->getMessage());
         }
-        return response()->json(compact('token'));
     }
 
 
