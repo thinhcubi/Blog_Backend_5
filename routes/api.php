@@ -18,9 +18,8 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-
-Route::middleware('jwt.verify')->group(function (){
-    Route::post('me',[LoginController::class, 'getAuthenticatedUser']);
+Route::middleware('jwt.verify')->group(function () {
+    Route::post('me', [LoginController::class, 'getAuthenticatedUser']);
     Route::post('logout', [LoginController::class, 'logout']);
 
     Route::prefix('users')->group(function () {
@@ -29,16 +28,15 @@ Route::middleware('jwt.verify')->group(function (){
         Route::put('/edit/{id}', [AdminController::class, 'edit']);
         Route::delete('/{id}', [AdminController::class, 'delete']);
         Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
-        Route::get('/posts',[UserController::class,'getListPostsByUser']);
+        Route::get('/posts', [UserController::class, 'getListPostsByUser']);
     });
 
     Route::prefix('posts')->group(function () {
-        Route::post('create',[PostController::class,'store']);
-        Route::get('/',[PostController::class,'index']);
+        Route::post('create', [PostController::class, 'store']);
+        Route::get('/', [PostController::class, 'index']);
 
     });
 });
-
 
 Route::post('/register', [LoginController::class, 'register']);
 Route::post('login', [LoginController::class, 'authenticate']);
