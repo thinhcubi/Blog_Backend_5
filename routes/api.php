@@ -34,10 +34,14 @@ Route::middleware('jwt.verify')->group(function () {
     Route::prefix('posts')->group(function () {
         Route::post('create', [PostController::class, 'store']);
         Route::get('/', [PostController::class, 'index']);
+        Route::put('/edit/{id}', [PostController::class, 'edit']);
+        Route::delete('/{id}', [PostController::class, 'destroy']);
+
 
     });
 });
-
+Route::get('newest', [PostController::class,'shownew']);
+Route::get('newest5', [PostController::class,'shownew5']);
 Route::post('/register', [LoginController::class, 'register']);
 Route::post('login', [LoginController::class, 'authenticate']);
 
