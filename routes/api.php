@@ -26,9 +26,11 @@ Route::middleware('jwt.verify')->group(function () {
         Route::get('/', [AdminController::class, 'index']);
         Route::post('/add', [AdminController::class, 'store']);
         Route::put('/edit', [UserController::class, 'editProfile']);
+        Route::get('/getById',[UserController::class,'getById']);
         Route::delete('/{id}', [AdminController::class, 'delete']);
         Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
         Route::get('/posts', [UserController::class, 'getListPostsByUser']);
+        Route::post('/create/post',[UserController::class,'createPost']);
     });
 
     Route::prefix('posts')->group(function () {
