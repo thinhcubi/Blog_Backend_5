@@ -16,6 +16,14 @@ class UserController extends Controller
         return response()->json($posts);
     }
 
+    public function getById()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $id = $user->id;
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+
     public function editProfile(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -28,5 +36,20 @@ class UserController extends Controller
                 'message' => 'Cập nhật thành công',
             ];
             return response()->json($data);
+    }
+
+    public function createPost(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $post = new Post();
+        $post->title = $request->title;
+        $post->content = $request->_content;
+        $post->image = $request->image;
+        $post->desc = $request->desc;
+        $post->user_id = $user->id;
+        $post->access_modifier = $request->access_modifier;
+        $post->category_id = $request->category_id;
+        $post->save();
+        return response()->json();
     }
 }
