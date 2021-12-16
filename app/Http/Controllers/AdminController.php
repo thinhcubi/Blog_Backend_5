@@ -36,14 +36,6 @@ class AdminController extends Controller
         return response()->json($data);
     }
 
-    function edit(Request $request, $id) {
-        User::find($id)->update($request->all());
-        $data = [
-            'status' => 'success',
-            'message' => 'sua thanh cong',
-        ];
-        return response()->json($data);
-    }
 
     function showDetail($id) {
         $user = User::find($id);

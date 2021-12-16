@@ -25,7 +25,7 @@ Route::middleware('jwt.verify')->group(function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [AdminController::class, 'index']);
         Route::post('/add', [AdminController::class, 'store']);
-        Route::put('/edit/{id}', [AdminController::class, 'edit']);
+        Route::put('/edit', [UserController::class, 'editProfile']);
         Route::delete('/{id}', [AdminController::class, 'delete']);
         Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
         Route::get('/posts', [UserController::class, 'getListPostsByUser']);
