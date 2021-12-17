@@ -75,14 +75,14 @@ class PostController extends Controller
         $Post = Post::findOrFail($id);
         return response()->json($Post);
     }
-    public function shownew()
+    public function showPublic()
     {
-        $post = Post::orderBy('created_at', 'desc')->limit(1)->get();
+        $post = Post::where('access_modifier', 0 )->with('user')->orderBy('id')->get();
         return response()->json($post);
     }
-    public function shownew5()
+    public function showPublicWithAuthor()
     {
-        $post = Post::orderBy('created_at', 'desc')->limit(5)->get();
+        $post = Post::where('created_at', 'desc')->limit(5)->get();
         return response()->json($post);
     }
 }

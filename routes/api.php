@@ -33,6 +33,7 @@ Route::middleware('jwt.verify')->group(function () {
         Route::get('/posts', [UserController::class, 'getListPostsByUser']);
         Route::post('/create/post',[UserController::class,'createPost']);
         Route::post('changePassword', [LoginController::class, 'changePassword']);
+        Route::get('/getCategories',[UserController::class,'getCategories']);
     });
 
     Route::prefix('posts')->group(function () {
@@ -44,8 +45,8 @@ Route::middleware('jwt.verify')->group(function () {
 
     });
 });
-Route::get('newest', [PostController::class,'shownew']);
-Route::get('newest5', [PostController::class,'shownew5']);
+Route::get('ppl', [PostController::class,'showPublic']);
+Route::get('newest5', [PostController::class,'showPublicWithAuthor']);
 Route::post('/register', [LoginController::class, 'register']);
 Route::post('login', [LoginController::class, 'authenticate']);
 

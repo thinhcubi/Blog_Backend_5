@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -51,5 +52,11 @@ class UserController extends Controller
         $post->category_id = $request->category_id;
         $post->save();
         return response()->json();
+    }
+
+    public function getCategories()
+    {
+        $categories = Category::all();
+        return response()->json($categories);
     }
 }
