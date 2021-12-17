@@ -10,6 +10,6 @@ class Category extends Model
     use HasFactory;
 
     public function post(){
-        return $this->hasOne('App\Post');
+        return $this->hasOne(Post::class);
     }
 }

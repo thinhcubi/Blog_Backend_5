@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
-
-
     public function index(){
 
         $post = Post::all();
@@ -85,4 +83,5 @@ class PostController extends Controller
         $post = Post::where('created_at', 'desc')->limit(5)->get();
         return response()->json($post);
     }
+
 }
