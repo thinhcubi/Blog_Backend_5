@@ -31,6 +31,7 @@ Route::middleware('jwt.verify')->group(function () {
         Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
         Route::get('/posts', [UserController::class, 'getListPostsByUser']);
         Route::post('/create/post',[UserController::class,'createPost']);
+        Route::get('/getCategories',[UserController::class,'getCategories']);
     });
 
     Route::prefix('posts')->group(function () {
