@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePassWordRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,7 @@ class LoginController extends Controller
             } else {
                 $data = [
                     'status' => 'error',
-                    'message' => 'không tài khoản không hợp lệ'
+                    'message' => 'Tài khoản hoặc mật khẩu không hợp lệ hợp lệ vui lòng nhập lại'
                 ];
                 return response()->json($data);
             }
@@ -93,6 +94,28 @@ class LoginController extends Controller
         $data = [
             'status' => 'success',
             'message' => 'Logout success'
+        ];
+        return response()->json($data);
+    }
+
+    function changePassword(ChangePassWordRequest $request)
+    {
+        $user = Auth::user();
+        $userPassword = $user->password;
+
+        if (!Hash::check($request->current_password, $userPassword)){
+            $data = [
+                'status' => 'error',
+                'message' => 'Mật khẩu không khớp vui lòng nhập lại'
+            ];
+            return response()->json($data);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+        $data = [
+            'status' => 'success',
+            'message' => 'Mật khẩu đã được thay đổi thành công'
         ];
         return response()->json($data);
     }
