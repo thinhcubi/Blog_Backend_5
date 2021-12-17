@@ -42,8 +42,8 @@ Route::middleware('jwt.verify')->group(function () {
 
     });
 });
-Route::get('newest', [PostController::class,'shownew']);
-Route::get('newest5', [PostController::class,'shownew5']);
+Route::get('ppl', [PostController::class,'showPublic']);
+Route::get('newest5', [PostController::class,'showPublicWithAuthor']);
 Route::post('/register', [LoginController::class, 'register']);
 Route::post('login', [LoginController::class, 'authenticate']);
 
