@@ -85,4 +85,10 @@ class PostController extends Controller
         $post = Post::where('created_at', 'desc')->limit(5)->get();
         return response()->json($post);
     }
+
+    public function showDetailPost(Request $request)
+    {
+        $post = Post::findOrFail($request->id);
+        return response()->json($post);
+    }
 }
