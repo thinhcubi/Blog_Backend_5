@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\AdminController;
 |
 */
 
+
 Route::middleware('jwt.verify')->group(function () {
     Route::post('me', [LoginController::class, 'getAuthenticatedUser']);
     Route::post('logout', [LoginController::class, 'logout']);
@@ -31,6 +33,7 @@ Route::middleware('jwt.verify')->group(function () {
         Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
         Route::get('/posts', [UserController::class, 'getListPostsByUser']);
         Route::post('/create/post',[UserController::class,'createPost']);
+        Route::post('changePassword', [LoginController::class, 'changePassword']);
         Route::get('/getCategories',[UserController::class,'getCategories']);
     });
 
@@ -43,8 +46,12 @@ Route::middleware('jwt.verify')->group(function () {
 
     });
 });
-Route::get('ppl', [PostController::class,'showPublic']);
 Route::get('newest5', [PostController::class,'showPublicWithAuthor']);
 Route::post('/register', [LoginController::class, 'register']);
 Route::post('login', [LoginController::class, 'authenticate']);
+Route::prefix('ppl')->group(function (){
+    Route::get('', [PostController::class,'showPublic']);
+    Route::get('/category', [CategoryController::class, 'getCategory']);
+    Route::get('/{id}/posts' , [CategoryController::class, 'showPostByCategory']);
+});
 

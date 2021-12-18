@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
-
-
     public function index(){
 
         $post = Post::all();
@@ -86,9 +84,12 @@ class PostController extends Controller
         return response()->json($post);
     }
 
+<<<<<<< HEAD
     public function showDetailPost(Request $request)
     {
         $post = Post::findOrFail($request->id);
         return response()->json($post);
     }
+=======
+>>>>>>> dec4ff3b48f35369d63aef06e73b3b605f8b58be
 }
