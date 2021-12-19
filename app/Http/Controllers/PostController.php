@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRequest;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -84,12 +85,14 @@ class PostController extends Controller
         return response()->json($post);
     }
 
-<<<<<<< HEAD
     public function showDetailPost(Request $request)
     {
         $post = Post::findOrFail($request->id);
-        return response()->json($post);
+        $user = User::where('id',$post->user_id)->get();
+        $data = [
+          'post' => $post,
+          'user' => $user
+        ];
+        return response()->json($data);
     }
-=======
->>>>>>> dec4ff3b48f35369d63aef06e73b3b605f8b58be
 }
