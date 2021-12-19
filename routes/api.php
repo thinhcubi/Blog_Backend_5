@@ -42,7 +42,7 @@ Route::middleware('jwt.verify')->group(function () {
         Route::get('/', [PostController::class, 'index']);
         Route::put('/edit/{id}', [PostController::class, 'edit']);
         Route::delete('/{id}', [PostController::class, 'destroy']);
-        Route::get('/{id}/detail',[PostController::class,'showDetailPost']);
+        Route::get('/detail/{id}',[PostController::class,'showDetailPost']);
 
     });
 });
