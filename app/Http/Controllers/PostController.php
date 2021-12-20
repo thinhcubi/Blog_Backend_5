@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRequest;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,7 +47,7 @@ class PostController extends Controller
         return response()->json($songs);
     }
 
-    public function update (StoreRequest $request){
+    public function update (Request $request){
 
         DB::beginTransaction();
 
@@ -84,4 +85,14 @@ class PostController extends Controller
         return response()->json($post);
     }
 
+    public function showDetailPost(Request $request)
+    {
+        $post = Post::findOrFail($request->id);
+        $user = User::where('id',$post->user_id)->get();
+        $data = [
+          'post' => $post,
+          'user' => $user
+        ];
+        return response()->json($data);
+    }
 }
