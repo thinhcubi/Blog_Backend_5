@@ -52,6 +52,8 @@ Route::post('login', [LoginController::class, 'authenticate']);
 Route::prefix('ppl')->group(function (){
     Route::get('', [PostController::class,'showPublic']);
     Route::get('/category', [CategoryController::class, 'getCategory']);
+    Route::get('/category/{id}', [CategoryController::class, 'DetailCategory']);
+
     Route::get('/posts/{id}' , [CategoryController::class, 'showPostByCategory']);
     Route::get('/ofUser/{id}', [PostController::class, 'showPublicWithAuthor']);
 });
