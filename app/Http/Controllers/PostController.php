@@ -47,7 +47,7 @@ class PostController extends Controller
         return response()->json($songs);
     }
 
-    public function update (StoreRequest $request){
+    public function update (Request $request){
 
         DB::beginTransaction();
 

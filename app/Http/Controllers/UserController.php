@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -39,7 +40,7 @@ class UserController extends Controller
             return response()->json($data);
     }
 
-    public function createPost(Request $request)
+    public function createPost(CreatePostRequest $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         $post = new Post();
