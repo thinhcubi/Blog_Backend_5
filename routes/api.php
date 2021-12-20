@@ -56,6 +56,7 @@ Route::prefix('ppl')->group(function (){
     Route::get('/category/{id}', [CategoryController::class, 'DetailCategory']);
 
     Route::get('/posts/{id}' , [CategoryController::class, 'showPostByCategory']);
+    Route::get('/ofUser/{id}', [PostController::class, 'showPublicWithAuthor']);
 });
 Route::get('posts/detail/{id}',[PostController::class,'showDetailPost']);
 

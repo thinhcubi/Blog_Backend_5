@@ -79,10 +79,10 @@ class PostController extends Controller
         $post = Post::where('access_modifier', 0 )->with('user')->orderBy('id')->get();
         return response()->json($post);
     }
-    public function showPublicWithAuthor()
+    public function showPublicWithAuthor($id)
     {
-        $post = Post::where('created_at', 'desc')->limit(5)->get();
-        return response()->json($post);
+        $posts = Post::where('user_id', '=', $id)->where('access_modifier', 0)->with('user')->with('category')->get();
+        return response()->json($posts);
     }
 
     public function showDetailPost(Request $request)
