@@ -40,7 +40,7 @@ class UserController extends Controller
             return response()->json($data);
     }
 
-    public function createPost(CreatePostRequest $request)
+    public function createPost(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         $post = new Post();
@@ -65,6 +65,13 @@ class UserController extends Controller
         $user->image = $request->image;
         $user->save();
         return response()->json();
+    }
+    public function deletePost(Request $request){
+         $id = $request->id;
+         Post::destroy($id);
+        $user = JWTAuth::parseToken()->authenticate();
+        $posts = Post::where('user_id',$user->id)->get();
+        return response()->json($posts);
     }
 
 }

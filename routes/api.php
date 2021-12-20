@@ -29,7 +29,7 @@ Route::middleware('jwt.verify')->group(function () {
         Route::post('/add', [AdminController::class, 'store']);
         Route::put('/edit', [UserController::class, 'editProfile']);
         Route::get('/getById',[UserController::class,'getById']);
-        Route::delete('/{id}', [AdminController::class, 'delete']);
+        Route::delete('delete/{id}', [UserController::class, 'deletePost']);
         Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
         Route::get('/posts', [UserController::class, 'getListPostsByUser']);
         Route::post('/create/post',[UserController::class,'createPost']);
@@ -58,5 +58,5 @@ Route::prefix('ppl')->group(function (){
     Route::get('/posts/{id}' , [CategoryController::class, 'showPostByCategory']);
     Route::get('/ofUser/{id}', [PostController::class, 'showPublicWithAuthor']);
 });
-Route::get('/detail/{id}',[PostController::class,'showDetailPost']);
+Route::get('posts/detail/{id}',[PostController::class,'showDetailPost']);
 
