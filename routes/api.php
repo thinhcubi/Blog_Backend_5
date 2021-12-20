@@ -35,6 +35,7 @@ Route::middleware('jwt.verify')->group(function () {
         Route::post('/create/post',[UserController::class,'createPost']);
         Route::post('changePassword', [LoginController::class, 'changePassword']);
         Route::get('/getCategories',[UserController::class,'getCategories']);
+        Route::post('/updateImage',[UserController::class,'updateImage']);
     });
 
     Route::prefix('posts')->group(function () {
@@ -42,7 +43,7 @@ Route::middleware('jwt.verify')->group(function () {
         Route::get('/', [PostController::class, 'index']);
         Route::put('/edit/{id}', [PostController::class, 'edit']);
         Route::delete('/{id}', [PostController::class, 'destroy']);
-        Route::get('/detail/{id}',[PostController::class,'showDetailPost']);
+
 
     });
 });
@@ -54,4 +55,5 @@ Route::prefix('ppl')->group(function (){
     Route::get('/category', [CategoryController::class, 'getCategory']);
     Route::get('/posts/{id}' , [CategoryController::class, 'showPostByCategory']);
 });
+Route::get('/detail/{id}',[PostController::class,'showDetailPost']);
 

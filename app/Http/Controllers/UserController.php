@@ -60,4 +60,11 @@ class UserController extends Controller
         $categories = Category::all();
         return response()->json($categories);
     }
+    public function updateImage(Request $request){
+        $user = JWTAuth::parseToken()->authenticate();
+        $user->image = $request->image;
+        $user->save();
+        return response()->json();
+    }
+
 }
