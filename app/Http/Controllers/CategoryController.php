@@ -13,6 +13,11 @@ class CategoryController extends Controller
         return response()->json($category);
     }
 
+    function DetailCategory($id) {
+        $category = Category::find($id);
+        return response()->json($category);
+    }
+
     public function showPostByCategory($id) {
 
         $posts = Post::where('category_id', '=', $id)->where('access_modifier', 0 )->with('user')->with('category')->get();
