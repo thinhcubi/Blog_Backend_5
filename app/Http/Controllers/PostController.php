@@ -74,9 +74,10 @@ class PostController extends Controller
         $Post = Post::findOrFail($id);
         return response()->json($Post);
     }
-    public function showPublic()
+    public function showPublic(Request $request)
     {
-        $post = Post::where('access_modifier', 0 )->with('user')->orderBy('id')->get();
+        $pageSize = $request->pageSize;
+        $post = Post::where('access_modifier', 0 )->with('user')->orderBy('id')->paginate($pageSize);
         return response()->json($post);
     }
     public function showPublicWithAuthor()
@@ -94,5 +95,10 @@ class PostController extends Controller
           'user' => $user
         ];
         return response()->json($data);
+    }
+    public function showPostRecent(Request $request)
+    {
+        $post = Post::orderBy('id', 'desc')->where('access_modifier', 0)->limit(1)->get();
+        return response()->json($post);
     }
 }
