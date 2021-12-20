@@ -15,7 +15,7 @@ class CategoryController extends Controller
 
     public function showPostByCategory($id) {
 
-        $posts = Post::where('category_id', '=', $id)->where('access_modifier', 0 )->with('user')->get();
+        $posts = Post::where('category_id', '=', $id)->where('access_modifier', 0 )->with('user')->with('category')->get();
         return response()->json($posts);
     }
 }
