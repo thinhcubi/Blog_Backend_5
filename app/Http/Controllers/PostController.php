@@ -69,10 +69,11 @@ class PostController extends Controller
             throw $e;
         }
     }
-    public function findPost($id)
+    public function findPost(Request $request)
     {
-        $Post = Post::findOrFail($id);
-        return response()->json($Post);
+        $key = $request->title;
+        $posts = Post::where('title',"like",'%'.$key.'%')->get();
+        return response()->json($posts);
     }
     public function showPublic(Request $request)
     {

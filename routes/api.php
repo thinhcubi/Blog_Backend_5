@@ -60,4 +60,5 @@ Route::prefix('ppl')->group(function (){
     Route::get('/ofUser/{id}', [PostController::class, 'showPublicWithAuthor']);
 });
 Route::get('posts/detail/{id}',[PostController::class,'showDetailPost']);
+Route::post('/search', [PostController::class, 'findPost']);
 
