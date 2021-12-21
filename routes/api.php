@@ -27,8 +27,8 @@ Route::middleware('jwt.verify')->group(function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [AdminController::class, 'index']);
         Route::post('/add', [AdminController::class, 'store']);
-        Route::put('/edit', [UserController::class, 'editProfile']);
-        Route::get('/getById',[UserController::class,'getById']);
+        Route::put('/editProfile', [UserController::class, 'editProfile']);
+        Route::get('/getUserById',[UserController::class,'getUserById']);
         Route::delete('delete/{id}', [UserController::class, 'deletePost']);
         Route::get('/detail/{id}', [AdminController::class, 'showDetail']);
         Route::get('/posts', [UserController::class, 'getListPostsByUser']);
@@ -36,6 +36,8 @@ Route::middleware('jwt.verify')->group(function () {
         Route::post('changePassword', [LoginController::class, 'changePassword']);
         Route::get('/getCategories',[UserController::class,'getCategories']);
         Route::post('/updateImage',[UserController::class,'updateImage']);
+        Route::get('/getPost/{id}',[UserController::class,'getPostById']);
+        Route::post('/editPost/{id}',[UserController::class,'editPost']);
     });
 
     Route::prefix('posts')->group(function () {
@@ -43,8 +45,6 @@ Route::middleware('jwt.verify')->group(function () {
         Route::get('/', [PostController::class, 'index']);
         Route::put('/edit/{id}', [PostController::class, 'edit']);
         Route::delete('/{id}', [PostController::class, 'destroy']);
-
-
     });
 });
 Route::get('newest5', [PostController::class,'showPublicWithAuthor']);

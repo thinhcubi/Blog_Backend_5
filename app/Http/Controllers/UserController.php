@@ -18,7 +18,7 @@ class UserController extends Controller
         return response()->json($posts);
     }
 
-    public function getById()
+    public function getUserById()
     {
         $user = JWTAuth::parseToken()->authenticate();
         $id = $user->id;
@@ -72,6 +72,31 @@ class UserController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         $posts = Post::where('user_id',$user->id)->get();
         return response()->json($posts);
+    }
+
+    public function getPostById(Request $request)
+    {
+        $id = $request->id;
+        $post = Post::findOrFail($id);
+        $categories = Category::all();
+        $data = [
+            'categories' => $categories,
+            'post' => $post
+        ];
+        return response()->json($data);
+    }
+    public function editPost(Request $request)
+    {
+        $id = $request->id;
+        $post = Post::findOrFail($id);
+        $post->title = $request->title;
+        $post->content = $request->_content;
+        $post->image = $request->image;
+        $post->desc = $request->desc;
+        $post->access_modifier = $request->access_modifier;
+        $post->category_id = $request->category_id;
+        $post->save();
+        return response()->json($post);
     }
 
 }
