@@ -48,7 +48,7 @@ Route::middleware('jwt.verify')->group(function () {
     });
 });
 Route::get('newest5', [PostController::class,'showPublicWithAuthor']);
-Route::get('recent5', [PostController::class,'showPostRecent']);
+Route::get('recent', [PostController::class,'showPostRecent']);
 Route::post('/register', [LoginController::class, 'register']);
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::prefix('ppl')->group(function (){
@@ -60,4 +60,5 @@ Route::prefix('ppl')->group(function (){
     Route::get('/ofUser/{id}', [PostController::class, 'showPublicWithAuthor']);
 });
 Route::get('posts/detail/{id}',[PostController::class,'showDetailPost']);
+Route::post('/search', [PostController::class, 'findPost']);
 

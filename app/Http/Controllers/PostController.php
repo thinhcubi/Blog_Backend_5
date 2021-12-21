@@ -69,10 +69,11 @@ class PostController extends Controller
             throw $e;
         }
     }
-    public function findPost($id)
+    public function findPost(Request $request)
     {
-        $Post = Post::findOrFail($id);
-        return response()->json($Post);
+        $key = $request->title;
+        $posts = Post::where('title',"like",'%'.$key.'%')->get();
+        return response()->json($posts);
     }
     public function showPublic(Request $request)
     {
@@ -98,7 +99,7 @@ class PostController extends Controller
     }
     public function showPostRecent(Request $request)
     {
-        $post = Post::orderBy('id', 'desc')->where('access_modifier', 0)->limit(1)->get();
+        $post = Post::orderBy('id', 'desc')->where('access_modifier', 0)->with('user')->limit(1)->get();
         return response()->json($post);
     }
 }
