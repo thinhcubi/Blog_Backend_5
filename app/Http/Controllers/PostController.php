@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PostController extends Controller
 {
@@ -93,7 +95,7 @@ class PostController extends Controller
         $user = User::where('id',$post->user_id)->get();
         $data = [
           'post' => $post,
-          'user' => $user
+          'user' => $user,
         ];
         return response()->json($data);
     }
@@ -102,4 +104,21 @@ class PostController extends Controller
         $post = Post::orderBy('id', 'desc')->where('access_modifier', 0)->with('user')->limit(1)->get();
         return response()->json($post);
     }
+
+    public function getComment(Request $request)
+    {
+        $user_comment = DB::table('posts')->join('comments','comments.post_id','=','posts.id')->join('users','users.id','=','comments.user_id')->where('posts.id','=',$request->id)->get();
+        return response()->json($user_comment);
+    }
+    public function createComment(Request $request){
+        $user = JWTAuth::parseToken()->authenticate();
+        $comment = new Comment();
+        $comment->content = $request->_content;
+        $comment->user_id = $user->id;
+        $comment->post_id = $request->post_id;
+        $comment->save();
+        return response()->json($comment);
+    }
+
 }
+
