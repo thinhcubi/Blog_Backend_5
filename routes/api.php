@@ -38,6 +38,7 @@ Route::middleware('jwt.verify')->group(function () {
         Route::post('/updateImage',[UserController::class,'updateImage']);
         Route::get('/getPost/{id}',[UserController::class,'getPostById']);
         Route::post('/editPost/{id}',[UserController::class,'editPost']);
+        Route::post('/createComment',[PostController::class,'createComment']);
     });
 
     Route::prefix('posts')->group(function () {
@@ -60,5 +61,6 @@ Route::prefix('ppl')->group(function (){
     Route::get('/ofUser/{id}', [PostController::class, 'showPublicWithAuthor']);
 });
 Route::get('posts/detail/{id}',[PostController::class,'showDetailPost']);
+Route::get('posts/getComment/{id}',[PostController::class,'getComment']);
 Route::post('/search', [PostController::class, 'findPost']);
 
