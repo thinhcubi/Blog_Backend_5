@@ -39,6 +39,7 @@ Route::middleware('jwt.verify')->group(function () {
         Route::get('/getPost/{id}',[UserController::class,'getPostById']);
         Route::post('/editPost/{id}',[UserController::class,'editPost']);
         Route::post('/createComment',[PostController::class,'createComment']);
+        Route::delete('/{id}', [AdminController::class, 'delete']);
     });
 
     Route::prefix('posts')->group(function () {
